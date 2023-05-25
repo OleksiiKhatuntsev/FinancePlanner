@@ -65,7 +65,7 @@ namespace Persistence.Migrations
                     Amount = table.Column<decimal>(type: "numeric", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     CurrencyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    OperationTypeId = table.Column<Guid>(type: "uuid", nullable: true)
+                    OperationTypeId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +80,8 @@ namespace Persistence.Migrations
                         name: "FK_Operations_OperationTypes_OperationTypeId",
                         column: x => x.OperationTypeId,
                         principalTable: "OperationTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Operations_Users_UserId",
                         column: x => x.UserId,

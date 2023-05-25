@@ -16,7 +16,7 @@
 
         public Currency Currency { get; set; }
 
-        public Guid OperationId { get; set; }
+        public Guid OperationTypeId { get; set; }
 
         public OperationType OperationType { get; set; }
     }
