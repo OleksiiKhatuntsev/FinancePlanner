@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230525203359_InitialCreate")]
+    [Migration("20230525212749_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -51,7 +51,7 @@ namespace Persistence.Migrations
                     b.Property<Guid>("CurrencyId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("OperationTypeId")
+                    b.Property<Guid>("OperationTypeId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
@@ -118,9 +118,11 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.OperationType", null)
+                    b.HasOne("Domain.OperationType", "OperationType")
                         .WithMany("Operations")
-                        .HasForeignKey("OperationTypeId");
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.User", "User")
                         .WithMany("Operations")
@@ -129,6 +131,8 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Currency");
+
+                    b.Navigation("OperationType");
 
                     b.Navigation("User");
                 });

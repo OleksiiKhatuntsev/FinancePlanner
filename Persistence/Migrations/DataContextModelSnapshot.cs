@@ -48,10 +48,7 @@ namespace Persistence.Migrations
                     b.Property<Guid>("CurrencyId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("OperationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("OperationTypeId")
+                    b.Property<Guid>("OperationTypeId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
@@ -120,7 +117,9 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.OperationType", "OperationType")
                         .WithMany("Operations")
-                        .HasForeignKey("OperationTypeId");
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.User", "User")
                         .WithMany("Operations")
